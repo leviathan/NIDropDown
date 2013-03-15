@@ -9,8 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "NIDropDown.h"
 
-@interface NIViewController : UIViewController <NIDropDownDelegate>
-{
+@interface NIViewController : UIViewController <NIDropDownViewDelegate> {
     IBOutlet UIButton *btnSelect;
     NIDropDown *dropDown;
 }

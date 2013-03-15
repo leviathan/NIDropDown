@@ -3,22 +3,41 @@
 //  NIDropDown
 //
 //  Created by Bijesh N on 12/28/12.
+//  Further development by Joerg Polakowski
+//
 //  Copyright (c) 2012 Nitor Infotech. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 @class NIDropDown;
-@protocol NIDropDownDelegate
-- (void) niDropDownDelegateMethod: (NIDropDown *) sender;
-@end 
 
+typedef NS_ENUM(NSInteger, NIDropDownAnimationDirection) {
+    NIDropDownAnimationDirectionUp,
+    NIDropDownAnimationDirectionDown
+};
+
+//***************************************************************************************
+// Drop down view delegate protocol definition
+//***************************************************************************************
+@protocol NIDropDownViewDelegate
+- (void)niDropDownClosed:(NIDropDown *)sender withSelection:(id)selection;
+@end
+
+//***************************************************************************************
+// Public Interface declaration
+//***************************************************************************************
 @interface NIDropDown : UIView <UITableViewDelegate, UITableViewDataSource>
-{
-    NSString *animationDirection;
-}
-@property (nonatomic, retain) id <NIDropDownDelegate> delegate;
-@property (nonatomic, retain) NSString *animationDirection;
--(void)hideDropDown:(UIButton *)b;
-- (id)showDropDown:(UIButton *)b:(CGFloat *)height:(NSArray *)arr:(NSString *)direction;
+
+@property(strong) id <NIDropDownViewDelegate> delegate;
+@property(assign, readonly) NIDropDownAnimationDirection animationDirection;
+
+
+- (id)initDropDownFor:(UIControl *)theControl
+               height:(CGFloat)theHeight
+             elements:(NSArray *)theElements
+            direction:(NIDropDownAnimationDirection)theDirection;
+
+- (void)hideDropDown:(UIControl *)theControl;
+
 @end
